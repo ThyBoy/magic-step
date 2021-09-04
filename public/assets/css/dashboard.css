@@ -1,0 +1,29 @@
+/* USER INFO CSS */
+@media(max-width: 767.98px){
+    .user-pic-dashboard{
+        padding-top: 10px;
+        width: 20%;
+    }
+    .user-info-dashboard{
+        padding-top: 10px;
+        width: 80%;
+    }
+}
+
+/* CARD CSS */
+.bg-overlay:before {
+    content: "";
+    position: absolute;
+    background: 0 0!important;
+    opacity: .5;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 2
+}
+.bg-overlay>.left-toolbar {
+    position: absolute;
+    left: 10px;
+    top: 10px
+}

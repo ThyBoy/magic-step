@@ -1,0 +1,161 @@
+.nav-item{
+    text-decoration: none;
+}
+
+.nav-back-style{
+    background-color: #2ECC71; 
+    font-family: 'Montserrat', sans-serif;
+}
+
+.navbar-toggler{
+    color: white !important;
+    border-color: white !important;
+}
+
+.navbar-toggler-icon{
+    color: white !important;
+    border-color: white !important;
+}
+
+.col-align{
+    text-align: right !important;
+}
+
+.nav-type{
+    list-style-type: none;
+}
+
+.fa-color{
+    color:white;
+}
+
+.para-size{
+    font-weight: 400;
+    color: black;
+    font-size: 19px !important;
+}
+
+.card-title{
+    margin-bottom: 0px !important;
+    text-align: center !important;
+}
+
+
+
+.nav-cart-space{
+    margin-right: 120px;
+}
+.nav-align{
+    text-align: left !important;
+}
+
+.fa-color-5{
+    color: #2ECC71;
+}
+
+.prod-card{
+   
+    font-size: small !important; 
+    color: black;
+}
+
+.card-border{
+    border-radius: 25px !important;
+}
+
+.text-aligned{
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+
+.fa-col-space{
+    color: red;
+    padding-right: 5px;
+}
+
+.colum-space{
+    padding-left: 3px !important;
+    padding-right: 2px !important;
+  
+}
+
+.colum-space-first{
+  
+    padding-right: 0px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+.fa-common{
+    padding-top: 5px;
+    padding-right: 5px;
+}
+
+
+.form-size{
+    width: 50%;
+}
+.grocery{
+    color:red;
+}
+#grp{
+   
+    display: flex;
+    border: solid;
+    border-radius: 25px;
+    border-color: blue;
+}
+.card-avatar{
+    margin-top: -50px;
+}
+@media(min-width: 960px){
+    .fa-color-front{
+        display: none !important;
+    }
+}
+
+@media(max-width: 960px){
+    .img-res{
+        max-width: 100% !important;
+    }
+    .nav-back-style{
+        background-color: #ffffff; 
+        font-family: 'Montserrat', sans-serif;
+        color: black;
+    }
+    .mob-color{
+        color: black !important;
+    }
+    .fa-color{
+        color: black;
+    }
+    .nav-button-mob{
+        display: none !important;
+    }
+    .form-size{
+        width: 100%;
+        border-radius: 25px !important;
+        padding-top: 15px;
+    }
+    .fa-color{
+        display: none !important;
+    }
+    .fa-color-front-loc{
+        color:  #2ECC71;
+    }
+    .mob-align-spa{
+        padding: 0px !important;
+    }
+    .mob-text{
+        font-size: 1.1rem !important;
+    }
+    .img-mob{
+        display: none;
+    }
+}
+#heading{
+    padding-top: 10px;
+    font-size: large;
+    color: white;
+    }
