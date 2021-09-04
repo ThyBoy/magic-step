@@ -1,0 +1,39 @@
+.btn-login {
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
+  font-family: "Montserrat", sans-serif;
+  font-size: 25px !important;
+  font-weight: bolder;
+  width: 300px;
+  height: 70px;
+  margin-top: 25px;
+  border-radius: 20px !important;
+  margin-bottom: 18px;
+  border-color: #2ecc71 !important;
+  color: #2ecc71 !important;
+}
+
+.btn-outline-success:hover {
+  background-color: #2eec71 !important;
+  color: #ffffff !important;
+}
+
+.btn-register {
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
+  font-family: "Montserrat", sans-serif;
+  font-size: 25px !important;
+  font-weight: bolder;
+  width: 300px;
+  height: 70px;
+  margin-top: 25px;
+  border-radius: 20px !important;
+  margin-bottom: 18px;
+  background-color: #2ecc71 !important;
+}
+
+.btn-register:hover {
+  background-color: #ffffff !important;
+  color: #2ecc71;
+  border-color: #2ecc71 !important;
+}
