@@ -1,89 +1,101 @@
 import "./NavBar.css";
+import { useState, useLayoutEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMapMarkerAlt, faBell, faShoppingCart } from "@fortawesome/free-solid-svg-icons";
+import { faMapMarkerAlt, faBell } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faCaretDown } from "@fortawesome/free-solid-svg-icons";
+import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
+import { Dropdown, DropdownToggle } from "reactstrap";
+import { DropdownMenu, DropdownItem } from "reactstrap";
 
 export default function NavBar() {
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 960);
+  const otherColor = "#2ECC71";
+
+  useLayoutEffect(() => {
+    function updateWidth() {
+      setIsMobile(window.innerWidth < 960);
+      console.log(isMobile);
+    }
+    window.addEventListener("resize", updateWidth);
+    updateWidth();
+    return () => window.removeEventListener("resize", updateWidth);
+  });
+
+  function handleToggle() {
+    setDropdownOpen((prevState) => !prevState);
+  }
+
+  const DropdownComponent = ({ isMobile }) => (
+    <Dropdown isOpen={dropdownOpen} toggle={handleToggle}>
+      <DropdownToggle className="dropdown-color">
+        <div className="dropdown-icon">
+          <FontAwesomeIcon
+            icon={faBars}
+            size="2x"
+            color={isMobile ? otherColor : "white"}
+          />
+          <div id="caret-down">
+            <FontAwesomeIcon
+              icon={faCaretDown}
+              size="lg"
+              color={isMobile ? otherColor : "white"}
+            />
+          </div>
+        </div>
+      </DropdownToggle>
+      <DropdownMenu>
+        <DropdownItem header>Header</DropdownItem>
+        <DropdownItem href="#/action-1">Some Action</DropdownItem>
+        <DropdownItem text>Dropdown Item Text</DropdownItem>
+        <DropdownItem disabled>Action (disabled)</DropdownItem>
+        <DropdownItem divider />
+        <DropdownItem>Foo Action</DropdownItem>
+        <DropdownItem>Bar Action</DropdownItem>
+        <DropdownItem>Quo Action</DropdownItem>
+      </DropdownMenu>
+    </Dropdown>
+  );
+
+  const IconComponent = ({ isMobile }) => (
+    <div className="icon-pad">
+      <FontAwesomeIcon
+        icon={faShoppingCart}
+        color={isMobile ? otherColor : "white"}
+        size="2x"
+      />
+      <FontAwesomeIcon
+        icon={faBell}
+        color={isMobile ? otherColor : "white"}
+        size="2x"
+      />
+    </div>
+  );
+
   return (
     <div>
       <nav className="navbar navbar-inverse navbar-dark navbar-static-top nav-back-style">
-        <button
-          className="navbar-toggler nav-link dropdown-toggle nav-button-mob"
-          data-toggle="dropdown"
-          type="button"
-          id="dropdownMenuButton"
-        >
-          <span className="navbar-toggler-icon"></span>
-          <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a className="dropdown-item" href="/#">
-              Link
-            </a>
-            <a className="dropdown-item" href="/#">
-              Link
-            </a>
-          </div>
-        </button>
-
-        <div>
-          <FontAwesomeIcon className="fa-color-front-loc fa-color-front fa-2x" icon={faMapMarkerAlt} />
-          <span className="navbar-text mob-color" id="heading">
-            <b>New Delhi,India</b>
-          </span>
+        {isMobile ? null : <DropdownComponent isMobile={isMobile} />}
+        <div className="location-div">
+          <FontAwesomeIcon
+            icon={faMapMarkerAlt}
+            size="2x"
+            color={isMobile ? otherColor : "white"}
+          />
+          <p className="location-text">New Delhi,India</p>
         </div>
-
-        <ul className="nav-flex-icons ">
-          <li className="nav-item nav-type">
-            <a className="nav-link" href="/#">
-              <span>
-                <FontAwesomeIcon className="fa-color-front fa-2x" icon={faBell} />
-              </span>
-            </a>
-          </li>
-        </ul>
-
-        <div className="collapse navbar-collapse" id="collapsibleNavbar">
-          <ul className="navbar-nav ml-auto nav-flex-icons">
-            <li className="nav-item">
-              <a className="nav-link" href="/#">
-                Link
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="/#">
-                Link
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="/#">
-                Link
-              </a>
-            </li>
-          </ul>
-        </div>
-        <form className="d-flex form-size">
+        {isMobile ? <IconComponent isMobile={isMobile} /> : null}
+        <div className="search-div">
+          {isMobile ? <DropdownComponent isMobile={isMobile} /> : null}
           <input
             id="searchbar"
-            className="form-control mr-2 "
+            className="form-control mr-2 form-size"
             type="search"
             placeholder="Search products"
             aria-label="Search"
           />
-        </form>
-        <ul className="nav-flex-icons ">
-          <li className="nav-item nav-type">
-            <a className="nav-link" href="/#">
-              <span>
-                <FontAwesomeIcon className="fa-color fa-2x" icon={faShoppingCart} />
-              </span>
-            </a>
-          </li>
-          <li className="nav-item nav-type nav-cart-space">
-            <a className="nav-link " href="/#">
-              <span>
-                <FontAwesomeIcon className="fa-color fa-2x" icon={faBell} />
-              </span>
-            </a>
-          </li>
-        </ul>
+        </div>
+        {isMobile ? null : <IconComponent isMobile={isMobile} />}
       </nav>
     </div>
   );
