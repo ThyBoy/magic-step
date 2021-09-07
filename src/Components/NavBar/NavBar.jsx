@@ -1,4 +1,6 @@
 import "./NavBar.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMapMarkerAlt, faBell, faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 
 export default function NavBar() {
   return (
@@ -12,17 +14,17 @@ export default function NavBar() {
         >
           <span className="navbar-toggler-icon"></span>
           <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a className="dropdown-item" href="#">
+            <a className="dropdown-item" href="/#">
               Link
             </a>
-            <a className="dropdown-item" href="#">
+            <a className="dropdown-item" href="/#">
               Link
             </a>
           </div>
         </button>
 
         <div>
-          <i className="fas fa-map-marker-alt fa-color-front-loc fa-color-front fa-2x"></i>
+          <FontAwesomeIcon className="fa-color-front-loc fa-color-front fa-2x" icon={faMapMarkerAlt} />
           <span className="navbar-text mob-color" id="heading">
             <b>New Delhi,India</b>
           </span>
@@ -30,9 +32,9 @@ export default function NavBar() {
 
         <ul className="nav-flex-icons ">
           <li className="nav-item nav-type">
-            <a className="nav-link">
+            <a className="nav-link" href="/#">
               <span>
-                <i className="fas fa-bell fa-color-front fa-2x"></i>
+                <FontAwesomeIcon className="fa-color-front fa-2x" icon={faBell} />
               </span>
             </a>
           </li>
@@ -41,17 +43,17 @@ export default function NavBar() {
         <div className="collapse navbar-collapse" id="collapsibleNavbar">
           <ul className="navbar-nav ml-auto nav-flex-icons">
             <li className="nav-item">
-              <a className="nav-link" href="#">
+              <a className="nav-link" href="/#">
                 Link
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#">
+              <a className="nav-link" href="/#">
                 Link
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#">
+              <a className="nav-link" href="/#">
                 Link
               </a>
             </li>
@@ -68,16 +70,16 @@ export default function NavBar() {
         </form>
         <ul className="nav-flex-icons ">
           <li className="nav-item nav-type">
-            <a className="nav-link">
+            <a className="nav-link" href="/#">
               <span>
-                <i className="fas fa-shopping-cart fa-color fa-2x"></i>
+                <FontAwesomeIcon className="fa-color fa-2x" icon={faShoppingCart} />
               </span>
             </a>
           </li>
           <li className="nav-item nav-type nav-cart-space">
-            <a className="nav-link ">
+            <a className="nav-link " href="/#">
               <span>
-                <i className="fas fa-bell fa-color fa-2x"></i>
+                <FontAwesomeIcon className="fa-color fa-2x" icon={faBell} />
               </span>
             </a>
           </li>
