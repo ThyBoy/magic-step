@@ -28,7 +28,7 @@ export default function NavBar() {
 
   const DropdownComponent = ({ isMobile }) => (
     <Dropdown isOpen={dropdownOpen} toggle={handleToggle}>
-      <DropdownToggle className="dropdown-color">
+      <DropdownToggle className="dropdown-color" color='blue'>
         <div className="dropdown-icon">
           <FontAwesomeIcon
             icon={faBars}

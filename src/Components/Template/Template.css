@@ -11,20 +11,26 @@
 }
 
 .log-img-sec {
-  margin-top: 80px;
+  margin-top: auto;
 }
 
 .login-img {
   text-align: center;
+  margin-left: 100px;
   padding: 7% 10%;
   width: 100%;
   height: 100%;
 }
 
 /* Mobile Styles */
-@media (max-width: 800px) {
-  .login-img {
-    max-width: 100%;
+@media (max-width: 960px) {
+
+  .login-img{
+    text-align: center;
+    margin-left: 0px;
+    padding: 7% 10%;
+    width: 100%;
+    height: 100%;
   }
 
   .login-container {

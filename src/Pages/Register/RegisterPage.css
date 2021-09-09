@@ -12,32 +12,15 @@ b {
   margin-right: auto;
 }
 
-/* Mobile Styles */
 @media (max-width: 800px) {
-  .login-img {
-    max-width: 100% !important;
-    text-align: center;
-    padding: 7% 10%;
-    width: 600px;
-    height: 390px;
-  }
-
   .button-tab {
     margin-left: auto !important;
     margin-right: auto !important;
-  }
-
-  .login-container {
-    margin-top: 0;
   }
 
   .tab-mob {
     margin-right: auto !important;
     margin-left: auto !important;
     max-width: 100%;
-  }
-
-  .log-img-sec {
-    padding: 0 !important;
   }
 }
