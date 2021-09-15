@@ -37,3 +37,48 @@
   color: #2ecc71;
   border-color: #2ecc71 !important;
 }
+
+.btn-sm {
+  width: 150px;
+  height: 40px;
+  font-size: 13px !important;
+  border-radius: 5px !important;
+  padding: auto;
+  margin: auto;
+}
+
+.btn-call {
+  width: auto;
+  height: 60px;
+  font-size: 20px !important;
+  border-color: white !important;
+}
+.btn-call:hover {
+  background-color: #12a14e !important;
+  color: white;
+  border-color: white !important;
+}
+
+.btn-message {
+  width: auto;
+  height: 60px;
+  font-size: 20px !important;
+  background-color: #00bdfe !important;
+  border-color: white !important;
+}
+.btn-message:hover {
+  background-color: #009dd1 !important;
+  color: white;
+  border-color: white !important;
+}
+
+@media (max-width: 960px) {
+  .btn-call {
+    height: 50px;
+    font-size: 15px !important;
+  }
+  .btn-message {
+    height: 50px;
+    font-size: 15px !important;
+  }
+}

@@ -1,77 +1,59 @@
 import "./NavBar.css";
-import { useState, useLayoutEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapMarkerAlt, faBell } from "@fortawesome/free-solid-svg-icons";
 import { faBars, faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
-import { Dropdown, DropdownToggle } from "reactstrap";
-import { DropdownMenu, DropdownItem } from "reactstrap";
+import Dropdown from "react-bootstrap/Dropdown";
 
-export default function NavBar() {
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 960);
-  const otherColor = "#2ECC71";
+const otherColor = "#2ECC71";
 
-  useLayoutEffect(() => {
-    function updateWidth() {
-      setIsMobile(window.innerWidth < 960);
-      console.log(isMobile);
-    }
-    window.addEventListener("resize", updateWidth);
-    updateWidth();
-    return () => window.removeEventListener("resize", updateWidth);
-  });
-
-  function handleToggle() {
-    setDropdownOpen((prevState) => !prevState);
-  }
-
-  const DropdownComponent = ({ isMobile }) => (
-    <Dropdown isOpen={dropdownOpen} toggle={handleToggle}>
-      <DropdownToggle className="dropdown-color" color='blue'>
-        <div className="dropdown-icon">
+const DropdownComponent = ({ isMobile }) => (
+  <Dropdown id="dropdown-basic" color='white'>
+    <Dropdown.Toggle className="dropdown-color btn-success">
+      <div className="dropdown-icon">
+        <FontAwesomeIcon
+          icon={faBars}
+          size="2x"
+          color={isMobile ? otherColor : "white"}
+        />
+        <div id="caret-down">
           <FontAwesomeIcon
-            icon={faBars}
-            size="2x"
+            icon={faCaretDown}
+            size="lg"
             color={isMobile ? otherColor : "white"}
           />
-          <div id="caret-down">
-            <FontAwesomeIcon
-              icon={faCaretDown}
-              size="lg"
-              color={isMobile ? otherColor : "white"}
-            />
-          </div>
         </div>
-      </DropdownToggle>
-      <DropdownMenu>
-        <DropdownItem header>Header</DropdownItem>
-        <DropdownItem href="#/action-1">Some Action</DropdownItem>
-        <DropdownItem text>Dropdown Item Text</DropdownItem>
-        <DropdownItem disabled>Action (disabled)</DropdownItem>
-        <DropdownItem divider />
-        <DropdownItem>Foo Action</DropdownItem>
-        <DropdownItem>Bar Action</DropdownItem>
-        <DropdownItem>Quo Action</DropdownItem>
-      </DropdownMenu>
-    </Dropdown>
-  );
+      </div>
+    </Dropdown.Toggle>
+    <Dropdown.Menu>
+      <Dropdown.Header>Header</Dropdown.Header>
+      <Dropdown.Item href="#/action-1">Some Action</Dropdown.Item>
+      <Dropdown.ItemText>Dropdown Item Text</Dropdown.ItemText>
+      <Dropdown.Item disabled>Action (disabled)</Dropdown.Item>
+      <Dropdown.Divider />
+      <Dropdown.Item>Foo Action</Dropdown.Item>
+      <Dropdown.Item>Bar Action</Dropdown.Item>
+      <Dropdown.Item>Quo Action</Dropdown.Item>
+    </Dropdown.Menu>
+  </Dropdown>
+);
 
-  const IconComponent = ({ isMobile }) => (
-    <div className="icon-pad">
-      <FontAwesomeIcon
-        icon={faShoppingCart}
-        color={isMobile ? otherColor : "white"}
-        size="2x"
-      />
-      <FontAwesomeIcon
-        icon={faBell}
-        color={isMobile ? otherColor : "white"}
-        size="2x"
-      />
-    </div>
-  );
+const IconComponent = ({ isMobile }) => (
+  <div className="icon-pad">
+    <FontAwesomeIcon
+      icon={faShoppingCart}
+      color={isMobile ? otherColor : "white"}
+      size="2x"
+    />
+    <FontAwesomeIcon
+      icon={faBell}
+      color={isMobile ? otherColor : "white"}
+      size="2x"
+    />
+  </div>
+);
 
+export default function NavBar({ isMobile }) {
   return (
     <div>
       <nav className="navbar navbar-inverse navbar-dark navbar-static-top nav-back-style">

@@ -1,0 +1,40 @@
+.category-head {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin: 3% 10%;
+  padding: auto;
+}
+
+.discover-heading {
+  font-size: 1.2rem;
+  font-weight: bolder;
+}
+
+.category {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 1% 10%;
+  padding: auto;
+}
+
+@media (max-width: 960px) {
+  .category-head {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin: 3% 5%;
+    padding: auto;
+  }
+
+  .categories-head {
+    width: 75%;
+  }
+  .view-btn {
+    width: 25%;
+  }
+}
