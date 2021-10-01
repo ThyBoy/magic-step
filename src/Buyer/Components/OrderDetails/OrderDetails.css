@@ -1,0 +1,66 @@
+.price-table {
+  display: flex;
+  flex-direction: row;
+}
+
+.first-col {
+  width: 50%;
+}
+
+.second-col {
+  width: 20%;
+  text-align: end;
+}
+
+.price-total {
+  font-weight: 600;
+}
+
+.address-head {
+  display: flex;
+  flex-direction: row;
+}
+
+.address-details {
+  padding-left: 1%;
+}
+
+.address-icons {
+  padding-right: 5%;
+}
+
+.address-name {
+  font-weight: 500;
+}
+
+.address-all {
+  font-weight: 400;
+}
+
+.address-phone {
+  font-weight: 500;
+}
+
+.order-details {
+  margin-left: 1rem;
+  padding-left: 3rem;
+}
+
+.delivery-details {
+  display: flex;
+  flex-direction: row;
+  font-weight: 500;
+}
+
+.details-head {
+  font-weight: 600;
+  padding-bottom: 15px;
+}
+
+@media (max-width: 960px) {
+  .order-details {
+    width: 100%;
+    margin: 1rem;
+    padding: 3rem;
+  }
+}

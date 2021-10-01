@@ -1,0 +1,44 @@
+.my-orders {
+  padding: 2% 5%;
+}
+.order-img-div {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.order-head {
+  color: black;
+  font-size: 30px !important;
+  font-weight: 400;
+  font-family: "Montserrat", sans-serif;
+}
+
+.order-img {
+  margin-top: 100px;
+  margin-left: 20px;
+  margin-right: 80px;
+  padding: 7% 10%;
+  width: 100%;
+  height: fit-content;
+}
+
+.order-container {
+  margin: 20px 0 0 0;
+}
+
+@media (max-width: 960px) {
+  .order-img {
+    margin-left: 0px;
+    margin-top: 0px;
+    margin-right: 0px;
+    height: 100%;
+    max-width: 600px;
+  }
+  .order-container {
+    margin-top: 50px;
+  }
+  .all-orders {
+    width: 90%;
+  }
+}

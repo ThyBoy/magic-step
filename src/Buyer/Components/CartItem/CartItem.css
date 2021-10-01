@@ -1,0 +1,23 @@
+.quantity-div {
+  display: flex;
+  flex-direction: row;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.chevron {
+  padding: 2px 50px;
+  cursor: pointer;
+}
+
+.quantity-head {
+  font-weight: 400;
+  font-size: 18px;
+  margin: auto 10px;
+  padding: auto;
+}
+
+.quantity {
+  margin: auto 10px;
+  padding: auto;
+}

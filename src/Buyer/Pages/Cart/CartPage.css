@@ -1,0 +1,30 @@
+.cart-div {
+  margin-left: 1%;
+  border-right: 1px solid black;
+}
+
+.cart-page {
+  margin-left: 2%;
+  margin-right: 0px !important ;
+}
+
+.checkout-btn {
+  padding-top: 20px;
+  display: flex;
+  flex-direction: row;
+  width: 50%;
+  justify-content: space-evenly;
+}
+
+@media (max-width: 960px) {
+  .cart-div {
+    margin: 1rem;
+    padding: 3rem;
+    padding-bottom: 0px;
+    width: 100%;
+  }
+  .cart-page {
+    margin: 10px !important;
+    padding: 5px !important;
+  }
+}

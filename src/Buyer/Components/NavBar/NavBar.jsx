@@ -1,42 +1,44 @@
 import "./NavBar.css";
+import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapMarkerAlt, faBell } from "@fortawesome/free-solid-svg-icons";
-import { faBars, faCaretDown } from "@fortawesome/free-solid-svg-icons";
-import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
-import Dropdown from "react-bootstrap/Dropdown";
+import { faShoppingCart, faBars } from "@fortawesome/free-solid-svg-icons";
+import Offcanvas from "react-bootstrap/Offcanvas";
 
 const otherColor = "#2ECC71";
 
-const DropdownComponent = ({ isMobile }) => (
-  <Dropdown id="dropdown-basic" color='white'>
-    <Dropdown.Toggle className="dropdown-color btn-success">
-      <div className="dropdown-icon">
+function OffcanvasComponent({ isMobile }) {
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  return (
+    <>
+      <div className="dropdown-color" onClick={handleShow}>
         <FontAwesomeIcon
           icon={faBars}
           size="2x"
           color={isMobile ? otherColor : "white"}
         />
-        <div id="caret-down">
-          <FontAwesomeIcon
-            icon={faCaretDown}
-            size="lg"
-            color={isMobile ? otherColor : "white"}
-          />
-        </div>
       </div>
-    </Dropdown.Toggle>
-    <Dropdown.Menu>
-      <Dropdown.Header>Header</Dropdown.Header>
-      <Dropdown.Item href="#/action-1">Some Action</Dropdown.Item>
-      <Dropdown.ItemText>Dropdown Item Text</Dropdown.ItemText>
-      <Dropdown.Item disabled>Action (disabled)</Dropdown.Item>
-      <Dropdown.Divider />
-      <Dropdown.Item>Foo Action</Dropdown.Item>
-      <Dropdown.Item>Bar Action</Dropdown.Item>
-      <Dropdown.Item>Quo Action</Dropdown.Item>
-    </Dropdown.Menu>
-  </Dropdown>
-);
+
+      <Offcanvas show={show} onHide={handleClose} scroll>
+        <Offcanvas.Header closeButton>
+          <Offcanvas.Title className="menu-head">Menu</Offcanvas.Title>
+        </Offcanvas.Header>
+        <Offcanvas.Body>
+          <div className="menu">
+            <p className="menu-items">About</p>
+            <p className="menu-items">Services</p>
+            <p className="menu-items">Client</p>
+            <p className="menu-items">Contact</p>
+          </div>
+        </Offcanvas.Body>
+      </Offcanvas>
+    </>
+  );
+}
 
 const IconComponent = ({ isMobile }) => (
   <div className="icon-pad">
@@ -57,7 +59,7 @@ export default function NavBar({ isMobile }) {
   return (
     <div>
       <nav className="navbar navbar-inverse navbar-dark navbar-static-top nav-back-style">
-        {isMobile ? null : <DropdownComponent isMobile={isMobile} />}
+        {isMobile ? null : <OffcanvasComponent isMobile={isMobile} />}
         <div className="location-div">
           <FontAwesomeIcon
             icon={faMapMarkerAlt}
@@ -68,7 +70,7 @@ export default function NavBar({ isMobile }) {
         </div>
         {isMobile ? <IconComponent isMobile={isMobile} /> : null}
         <div className="search-div">
-          {isMobile ? <DropdownComponent isMobile={isMobile} /> : null}
+          {isMobile ? <OffcanvasComponent isMobile={isMobile} /> : null}
           <input
             id="searchbar"
             className="form-control mr-2 form-size"

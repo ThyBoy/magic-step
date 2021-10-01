@@ -13,6 +13,44 @@ import {
   faPaperPlane,
 } from "@fortawesome/free-solid-svg-icons";
 import CustomButton from "../../Components/CustomButton/CustomButton";
+import ShirtImg from "../../img/Tshirt.jpg";
+import JeansImg from "../../img/Jeans.jpg";
+import ShopItem from "../../Components/ShopItem/ShopItem";
+
+const items = [
+  {
+    imgUrl: ShirtImg,
+    name: "Light Blue T-Shirt",
+    disPrice: 199,
+    price: 249,
+    rating: 4.9,
+    key: 1,
+  },
+  {
+    imgUrl: JeansImg,
+    name: "Light Blue Jeans",
+    disPrice: 199,
+    price: 249,
+    rating: 4.9,
+    key: 2,
+  },
+  {
+    imgUrl: ShirtImg,
+    name: "Light Blue T-Shirt",
+    disPrice: 199,
+    price: 249,
+    rating: 4.9,
+    key: 3,
+  },
+  {
+    imgUrl: JeansImg,
+    name: "Light Blue Jeans",
+    disPrice: 199,
+    price: 249,
+    rating: 4.9,
+    key: 4,
+  },
+];
 
 const Details = () => (
   <div>
@@ -90,6 +128,14 @@ export default function ShopPage({ isMobile }) {
                 </div>
               </CustomButton>
             </div>
+          </div>
+        </div>
+        <div className="shop-products">
+          <h3 className="products-head">Found 56 Products</h3>
+          <div className="products-list">
+            {items.map(({ key, ...other }) => (
+              <ShopItem itemDetails={other} key={key} />
+            ))}
           </div>
         </div>
       </div>

@@ -1,27 +1,18 @@
-#dropdown-basic::after {
-  display: none;
+.menu-head {
+  font-size: 25px;
+  font-weight: 600;
 }
 
-.dropdown-toggle::after {
-  display: none;
+.menu-items {
+  font-size: 20px;
+  font-weight: 500;
 }
 
 .dropdown-color {
   background-color: #2ecc71;
-  border: 1px solid white;
   padding: auto;
   margin-left: 40px;
-}
-
-.dropdown-icon {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-}
-
-#caret-down {
-  padding-left: 10px;
+  cursor: pointer;
 }
 
 .nav-back-style {
@@ -71,6 +62,9 @@
 }
 
 @media (max-width: 960px) {
+  #searchbar {
+    background-color: white;
+  }
   .nav-back-style {
     background-color: white;
     margin-top: 20px;
@@ -97,7 +91,6 @@
   }
   .dropdown-color {
     background-color: white;
-    border: 1px solid #2ecc71;
     padding: auto;
     margin-left: 10px;
     margin-right: 10px;

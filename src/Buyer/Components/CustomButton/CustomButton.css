@@ -39,7 +39,7 @@
 }
 
 .btn-sm {
-  width: 150px;
+  width: fit-content;
   height: 40px;
   font-size: 13px !important;
   border-radius: 5px !important;
