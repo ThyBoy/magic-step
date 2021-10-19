@@ -1,0 +1,21 @@
+.space-up {
+  margin-top: 13px;
+  overflow: auto;
+}
+
+.space-left {
+  padding-left: 0px !important;
+  overflow: auto;
+}
+
+@media (max-width: 800px) {
+  .space-left {
+    padding-left: 50px !important;
+    overflow: auto;
+  }
+
+  .space-up {
+    position: absolute !important;
+    overflow: auto;
+  }
+}

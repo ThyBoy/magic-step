@@ -1,0 +1,16 @@
+.loading-div {
+  background-color: rgba(4, 170, 109, 0.2);
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  left: 0px;
+  top: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.spinner-border {
+  width: 100px;
+  height: 100px;
+}

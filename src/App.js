@@ -1,5 +1,51 @@
-import Buyer from "./Buyer/Buyer";
+import HomePage from "./Pages/Home/HomePage";
+import ShopList from "./Pages/ShopList/ShopList";
+import LoginPage from "./Pages/Login/LoginPage";
+import RegisterPage from "./Pages/Register/RegisterPage";
+import LocationPage from "./Pages/Location/LocationPage";
+//import ShopPage from "./Pages/Shop/ShopPage";
+import ProfilePage from "./Pages/Profile/ProfilePage";
+import CartPage from "./Pages/Cart/CartPage";
+//import OrderPage from "./Pages/Order/OrderPage";
+import MyOrdersPage from "./Pages/MyOrders/MyOrdersPage";
+import { Redirect, Route, Switch } from "react-router";
+import NotificationComponent from "./Components/Notification/NotificationComponent";
+import LoadingComponent from "./Components/Loading/LoadingComponent";
+import VerificationPage from "./Pages/Verification/VerificationPage";
+import { useSelector } from "react-redux";
+import { selectCurrentUser } from "./redux/user/user.selectors";
+import ProductPage from "./Pages/Product/ProductPage";
 
-export default function App() {
-  return <Buyer />;
+function App() {
+  const user = useSelector(selectCurrentUser);
+  console.log(user?.unapproved);
+  return (
+    <>
+      <ProductPage />
+      <NotificationComponent />
+      <LoadingComponent />
+      <Route path="/">
+        {user?.unapproved ? (
+          <VerificationPage />
+        ) : (
+          <Switch>
+            <Route exact path="/" component={HomePage} />
+            <Route path="/login">
+              {user ? <Redirect to="/" /> : <LoginPage />}
+            </Route>
+            <Route exact path="/shops" component={ShopList} />
+            <Route path="/register">
+              {user ? <Redirect to="/" /> : <RegisterPage />}
+            </Route>
+            <Route exact path="/location" component={LocationPage} />
+            <Route exact path="/cart" component={CartPage} />
+            <Route exact path="/myprofile" component={ProfilePage} />
+            <Route exact path="/myorders" component={MyOrdersPage} />
+          </Switch>
+        )}
+      </Route>
+    </>
+  );
 }
+
+export default App;
