@@ -11,7 +11,7 @@ import {
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { selectToken } from "../../redux/user/user.selectors";
-import { resetCurrentUser, setUserStatus } from "../../redux/user/user.actions";
+import { resetCurrentUser, setUnapproved } from "../../redux/user/user.actions";
 
 export default function VerificationPage() {
   const dispatch = useDispatch();
@@ -26,7 +26,7 @@ export default function VerificationPage() {
         },
       });
       console.log(response, response.data);
-      dispatch(setUserStatus());
+      dispatch(setUnapproved(false));
     } catch (error) {
       console.log(error);
       if (error.response.data?.error) {
@@ -49,9 +49,8 @@ export default function VerificationPage() {
   async function handleResend() {
     dispatch(showLoading());
     try {
-      const response = await axios.post(
+      const response = await axios.get(
         requestServerAddress + "user/getVerifyMail",
-        {},
         {
           headers: {
             "x-auth-token": token,

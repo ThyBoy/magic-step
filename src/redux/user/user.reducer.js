@@ -2,6 +2,7 @@ import { userActionTypes } from "./user.types";
 
 const INITIAL_STATE = {
   currentUser: null,
+  unapproved: true,
 };
 
 const userReducer = (state = INITIAL_STATE, action) => {
@@ -16,12 +17,13 @@ const userReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         currentUser: null,
+        unapproved: true,
       };
 
     case userActionTypes.SET_USER_STATUS:
       return {
         ...state,
-        currentUser: { unapproved: false, ...state.currentUser },
+        unapproved: action.payload,
       };
 
     default:

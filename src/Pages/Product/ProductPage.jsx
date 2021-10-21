@@ -1,13 +1,54 @@
 import "./ProductPage.css";
 import JeansImage from "../../img/Jeans.jpg";
 import HeadponeImage from "../../img/headphone.jpeg";
+import Headpone2Image from "../../img/headphone1.jpg";
 import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
 import CustomButton from "../../Components/CustomButton/CustomButton";
 import ImageRenderer from "../../Components/ImageRenderer/ImageRenderer";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStar } from "@fortawesome/free-solid-svg-icons";
+import {
+  faShoppingBag,
+  faStar,
+  faUndoAlt,
+} from "@fortawesome/free-solid-svg-icons";
+import { Accordion, Badge, ToggleButton } from "react-bootstrap";
+
+function GetStars(props) {
+  return (
+    <h6>
+      {[...Array(props.count).keys()].map((value, idx) => (
+        <FontAwesomeIcon key={idx} icon={faStar} color="#28a745" />
+      ))}
+    </h6>
+  );
+}
+
+function ReviewComponent(props) {
+  return (
+    <div>
+      <h5 className="review-head">
+        <Badge
+          bg="success"
+          style={{ fontWeight: "600", fontSize: "large", marginRight: "20px" }}
+        >
+          4 <FontAwesomeIcon icon={faStar} color="white" />
+        </Badge>
+        Very Nice
+      </h5>
+      <h6>Good Quality as described</h6>
+      <div className="review-img">
+        <img src={JeansImage} alt="review-img" className="img-review" />
+        <img src={JeansImage} alt="review-img" className="img-review" />
+        <img src={JeansImage} alt="review-img" className="img-review" />
+      </div>
+      <h6 className="review-foot">
+        Gaurav Sharma, Delhi <span className="span-tab"></span> 12 months ago
+      </h6>
+    </div>
+  );
+}
 
 export default function ProductPage() {
   const items = [
@@ -16,24 +57,24 @@ export default function ProductPage() {
       thumbnail: HeadponeImage,
     },
     {
+      original: Headpone2Image,
+      thumbnail: Headpone2Image,
+    },
+    {
       original: HeadponeImage,
       thumbnail: HeadponeImage,
     },
     {
-      original: JeansImage,
-      thumbnail: JeansImage,
+      original: Headpone2Image,
+      thumbnail: Headpone2Image,
     },
     {
       original: JeansImage,
       thumbnail: JeansImage,
     },
     {
-      original: JeansImage,
-      thumbnail: JeansImage,
-    },
-    {
-      original: JeansImage,
-      thumbnail: JeansImage,
+      original: Headpone2Image,
+      thumbnail: Headpone2Image,
     },
     {
       original: HeadponeImage,
@@ -44,13 +85,10 @@ export default function ProductPage() {
   const variants = ["Red", "Blue", "Orange", "Black"];
 
   const [fullScreen, setFullScreen] = useState(false);
+  const [variantValue, setVariantValue] = useState("");
 
   function imageHandler(props) {
     return <ImageRenderer {...props} fullScreen={fullScreen} />;
-  }
-
-  function handleFullScreen(bool) {
-    setFullScreen(bool);
   }
 
   const galleryProperties = {
@@ -61,7 +99,7 @@ export default function ProductPage() {
     slideDuration: 450,
     slideInterval: 4000,
     renderItem: imageHandler,
-    onScreenChange: handleFullScreen,
+    onScreenChange: (bool) => setFullScreen(bool),
   };
 
   return (
@@ -80,152 +118,103 @@ export default function ProductPage() {
           <span className="product-price">$199</span>
           <span className="text-strike">249</span>
         </h4>
-        <h5 className="product-rating">
-          <FontAwesomeIcon icon={faStar} color="#2ECC71" /> 4.9 (35 ratings)
+        <h5>
+          <Badge
+            bg="success"
+            style={{
+              fontWeight: "600",
+              fontSize: "large",
+              marginRight: "20px",
+              marginTop: "20px",
+            }}
+          >
+            <FontAwesomeIcon icon={faStar} color="white" /> 4.9
+          </Badge>
+          (35 ratings)
         </h5>
         <h5 className="variants-head">Variants</h5>
-        <div className="row mob-display-none">
-          <div className="col-sm-3 mb-3">
-            <button className="extra-all-same">Red</button>
-            <button className="ml-4 pl-1 extra-all-same-active">Blue</button>
-            <button className="ml-4 pl-1 extra-all-same">Orange</button>
-            <button className="ml-4 extra-all-same">Black</button>
-          </div>
-        </div>
-        <h5 className="font-weight-bold">Product info</h5>
-        <h5 className="w-75 mt-2 product-info">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Temporibus
-          commodi dicta sit eos, nulla aliquam, inventore hic ipsam ipsa
-          doloribus optio sequi accusamus, at expedita.
+        {variants.map((variant, idx) => (
+          <ToggleButton
+            className="variant-btn"
+            key={idx}
+            id={`radio-variant-${idx}`}
+            type="radio"
+            variant="outline-success"
+            name="radio"
+            value={variant}
+            checked={variantValue === variant}
+            onChange={(event) => setVariantValue(event.target.value)}
+          >
+            {variant}
+          </ToggleButton>
+        ))}
+        <h5 className="variants-head" style={{ paddingTop: "25px" }}>
+          Product Info
         </h5>
-
-        <hr className="mt-4 mb-4"></hr>
-
-        <div className="d-flex justify-content-between">
-          <h5 className="font-weight mb-2">
-            <a
-              className="extra-toggle-collapse"
-              data-toggle="collapse"
-              href="#collapse2"
-            >
-              <i className="fas fa-shopping-bag text-secondary pr-3"></i>Product
-              Details{" "}
-            </a>
-          </h5>
-          <a
-            className="extra-toggle-collapse"
-            data-toggle="collapse"
-            href="#collapse2"
-          >
-            <i className="fas fa-chevron-down align-right"></i>
-          </a>
+        <h5 className="product-info">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident
+          assumenda a cupiditate optio, dolores voluptates tempora sit
+          voluptatem eaque ipsum cumque iure eligendi quas vitae deserunt nemo!
+          Non, unde beatae.
+        </h5>
+        <div className="product-details">
+          <Accordion flush>
+            <Accordion.Item eventKey="0" className="details-item">
+              <Accordion.Button className="details-item-btn">
+                <div className="right-pad-more">
+                  <FontAwesomeIcon icon={faShoppingBag} color="#495057" />
+                </div>
+                Product Details
+              </Accordion.Button>
+              <Accordion.Body className="details-item-body">
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                Nesciunt quasi necessitatibus corporis. Repellendus beatae
+                consectetur autem deserunt nobis veniam tempora, libero, odit
+                quasi obcaecati necessitatibus excepturi corporis, ad blanditiis
+                maiores?
+              </Accordion.Body>
+            </Accordion.Item>
+            <Accordion.Item eventKey="1" className="details-item">
+              <Accordion.Button className="details-item-btn">
+                <div className="right-pad-more">
+                  <FontAwesomeIcon icon={faUndoAlt} color="#495057" />
+                </div>
+                10 Days Return Policy
+              </Accordion.Button>
+              <Accordion.Body className="details-item-body">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas
+                obcaecati distinctio blanditiis? Molestias velit autem porro et
+                aut facilis? Velit iusto repellat vero unde, impedit facilis id
+                commodi et veritatis?
+              </Accordion.Body>
+            </Accordion.Item>
+            <Accordion.Item eventKey="2" className="details-item">
+              <Accordion.Button className="details-item-btn">
+                <div className="right-pad-more">
+                  <FontAwesomeIcon icon={faShoppingBag} color="#495057" />
+                </div>
+                Shipping Information
+              </Accordion.Button>
+              <Accordion.Body className="details-item-body">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odio,
+                ex. Adipisci placeat amet a doloribus repellendus cumque
+                deserunt. Porro repellendus quam maiores ipsam pariatur iure qui
+                dolore aliquid libero nemo?
+              </Accordion.Body>
+            </Accordion.Item>
+          </Accordion>
         </div>
-        <div id="collapse2" className="collapse">
-          <p>Loreum ipsum Loreum hshs shvhhsu hsvysx </p>
-        </div>
-
-        <hr className="mt-4 mb-4"></hr>
-
-        <div className="d-flex justify-content-between">
-          <h5 className="font-weight">
-            {" "}
-            <a
-              className="extra-toggle-collapse"
-              data-toggle="collapse"
-              href="#collapse1"
-            >
-              <i className="fas fa-undo-alt text-secondary pr-3"></i>10 Days
-              Return Policy
-            </a>
-          </h5>
-          <a
-            className="extra-toggle-collapse"
-            data-toggle="collapse"
-            href="#collapse1"
-          >
-            <i className="fas fa-chevron-down align-right"></i>
-          </a>
-        </div>
-        <div id="collapse1" className="panel-collapse collapse">
-          <p>Loreum ipsum Loreum hshs shvhhsu hsvysx </p>
-        </div>
-
-        <hr className="mt-4 mb-4"></hr>
-
-        <div className="d-flex justify-content-between">
-          <h5 className="font-weight">
-            <a
-              className="extra-toggle-collapse"
-              data-toggle="collapse"
-              href="#collapse3"
-            >
-              <i className="fas fa-truck text-secondary pr-3 "></i>Shipping
-              Information
-            </a>
-          </h5>
-          <a
-            className="extra-toggle-collapse"
-            data-toggle="collapse"
-            href="#collapse3"
-          >
-            <i className="fas fa-chevron-down"></i>
-          </a>
-        </div>
-        <div id="collapse3" className="panel-collapse collapse">
-          <p>Loreum ipsum Loreum hshs shvhhsu hsvysx </p>
-        </div>
-
-        <hr className="mt-4 mb-4"></hr>
-
-        <h5 className="font-weight">Reviews</h5>
-
-        <div className="d-flex justify-content-between">
-          <h4 className="font-weight-bold">
+        <h5 className="variants-head" style={{ paddingTop: "15px" }}>
+          Reviews
+        </h5>
+        <div className="product-rating">
+          <h5>
             4.9 <span className="text-secondary">/5</span>
-          </h4>
-
-          <h6>
-            <i className="fas fa-star text-success"></i>
-            <i className="fas fa-star text-success"></i>
-            <i className="fas fa-star text-success"></i>
-            <i className="fas fa-star text-success"></i>
-            <i className="fas fa-star text-success"></i>
-          </h6>
+          </h5>
+          <GetStars count={5} />
         </div>
         <br />
-        <div className="extra-desk-review">
-          <h5 className="pt-1 pb-2">
-            <i className="fas fa-star text-success"></i> 4.5
-          </h5>
-          <h5>
-            <span className="font-weight-bold">Very Nice</span>
-            <br />
-            Good quality as described
-          </h5>
-          <div className="row">
-            <div className="col-5 ">
-              <img
-                className="pb-2 extra-img-mob-adjust"
-                src="img/Rectangle 7.jpg"
-                alt=""
-              />
-            </div>
-            <div className="col-5">
-              <img
-                className="pb-2 extra-img-mob-adjust"
-                src="img/Rectangle 7.jpg"
-                alt=""
-              />
-            </div>
-          </div>
-          <img className="pb-2" src="img/Rectangle 7.jpg" alt="" />
-          <img className="pt-2" src="img/Rectangle 7.jpg" alt="" />
-          <h5 className="pt-2">
-            Gaurav Sharma, Delhi <br />
-            Feb, 2020
-          </h5>
-          <hr />
-        </div>
+        <ReviewComponent />
       </div>
     </div>
   );

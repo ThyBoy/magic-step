@@ -13,19 +13,24 @@ import NotificationComponent from "./Components/Notification/NotificationCompone
 import LoadingComponent from "./Components/Loading/LoadingComponent";
 import VerificationPage from "./Pages/Verification/VerificationPage";
 import { useSelector } from "react-redux";
-import { selectCurrentUser } from "./redux/user/user.selectors";
+import {
+  selectCurrentUser,
+  selectUserStatus,
+} from "./redux/user/user.selectors";
 import ProductPage from "./Pages/Product/ProductPage";
+
+const NoMatch = () => <div>No Match Found</div>;
 
 function App() {
   const user = useSelector(selectCurrentUser);
-  console.log(user?.unapproved);
+  const unapproved = useSelector(selectUserStatus);
+  console.log(user, unapproved, user && unapproved);
   return (
     <>
-      <ProductPage />
       <NotificationComponent />
       <LoadingComponent />
       <Route path="/">
-        {user?.unapproved ? (
+        {user && unapproved ? (
           <VerificationPage />
         ) : (
           <Switch>
@@ -41,6 +46,8 @@ function App() {
             <Route exact path="/cart" component={CartPage} />
             <Route exact path="/myprofile" component={ProfilePage} />
             <Route exact path="/myorders" component={MyOrdersPage} />
+            <Route exact path="/product" component={ProductPage} />
+            <Route path="*" component={NoMatch} />
           </Switch>
         )}
       </Route>

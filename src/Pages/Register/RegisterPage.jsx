@@ -97,14 +97,15 @@ export default function RegisterPage() {
           email: userInputs.email,
           phone: userInputs.phone,
           roll: "basic",
-          token: user.token,
-          unapproved: true,
+          token: user.data.token,
         })
       );
       console.log(user);
     } catch (error) {
       if (error.response.data?.msg) {
         showNotification(error.response.data.msg);
+      } else if (error.response.data?.error) {
+        showNotification(error.response.data.error);
       } else {
         showNotification("An Error Occurred");
       }
@@ -175,11 +176,11 @@ export default function RegisterPage() {
           <div className="text-body pass-centre text-decoration-none">
             Already have an account?
             <Link
-              to="/"
+              to="/login"
               className="verify-signout"
               style={{ textDecoration: "none" }}
             >
-              Sign Out
+              Sign In
             </Link>
           </div>
         </div>

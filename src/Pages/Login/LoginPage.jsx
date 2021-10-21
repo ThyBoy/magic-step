@@ -15,7 +15,7 @@ import {
   changeNotification,
   hideLoading,
 } from "../../redux/modal/modal.actions";
-import { setCurrentUser } from "../../redux/user/user.actions";
+import { setCurrentUser, setUnapproved } from "../../redux/user/user.actions";
 
 export default function LoginPage() {
   const [credentials, setCredentials] = useState({ email: "", password: "" });
@@ -61,13 +61,15 @@ export default function LoginPage() {
           phone: user.data.user.phone,
           roll: user.data.user.roll,
           token: user.data.token,
-          unapproved: !(user.data.user.status === "approved"),
         })
       );
+      dispatch(setUnapproved(user.data.user.status === "unapproved"));
       console.log(user);
     } catch (error) {
       if (error.response.data?.msg) {
         showNotification(error.response.data.msg);
+      } else if (error.response.data?.error) {
+        showNotification(error.response.data.error);
       } else {
         showNotification("An Error Occurred");
       }

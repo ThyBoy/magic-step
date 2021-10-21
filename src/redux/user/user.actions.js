@@ -9,6 +9,7 @@ export const resetCurrentUser = () => ({
   type: userActionTypes.RESET_CURRENT_USER,
 });
 
-export const setUserStatus = () => ({
+export const setUnapproved = (bool) => ({
   type: userActionTypes.SET_USER_STATUS,
+  payload: bool,
 });

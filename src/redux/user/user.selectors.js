@@ -7,6 +7,11 @@ export const selectCurrentUser = createSelector(
   (user) => user.currentUser
 );
 
+export const selectUserStatus = createSelector(
+  [selectUser],
+  (user) => user.unapproved
+);
+
 export const selectToken = createSelector(
   [selectCurrentUser],
   (user) => user.token
