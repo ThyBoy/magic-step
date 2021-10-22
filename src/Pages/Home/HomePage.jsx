@@ -2,13 +2,16 @@ import "./HomePage.css";
 import FirstOfferImg from "../../img/offer-image1.jpg";
 import SecondOfferImg from "../../img/offer-image2.png";
 import FashionImg from "../../img/fashion.jpg";
-import SportsImg from "../../img/sports.jpg";
 import CarouselComponent from "../../Components/CarouselComponent/CarouselComponent";
 import CustomButton from "../../Components/CustomButton/CustomButton";
 import { useEffect, useState } from "react";
 import { CategoryCard } from "../../Components/CategoryComponents/Category";
 import { isMobile } from "react-device-detect";
 import NavBar from "../../Components/NavBar/NavBar";
+import axios from "axios";
+import { requestServerAddress } from "../../env";
+import { useSelector } from "react-redux";
+import { selectToken } from "../../redux/user/user.selectors";
 
 const items = [
   {
@@ -38,54 +41,6 @@ const items = [
   },
 ];
 
-const categories = [
-  {
-    imgurl: FashionImg,
-    category: "Fashion",
-    key: 1,
-  },
-  {
-    imgurl: SportsImg,
-    category: "Sports",
-    key: 2,
-  },
-  {
-    imgurl: FashionImg,
-    category: "Fashion",
-    key: 3,
-  },
-  {
-    imgurl: SportsImg,
-    category: "Sports",
-    key: 4,
-  },
-  {
-    imgurl: FashionImg,
-    category: "Fashion",
-    key: 5,
-  },
-  // {
-  //   imgurl: SportsImg,
-  //   category: "Sports",
-  //   key: 6,
-  // },
-  // {
-  //   imgurl: FashionImg,
-  //   category: "Fashion",
-  //   key: 7,
-  // },
-  // {
-  //   imgurl: SportsImg,
-  //   category: "Sports",
-  //   key: 8,
-  // },
-  // {
-  //   imgurl: FashionImg,
-  //   category: "Fashion",
-  //   key: 9,
-  // },
-];
-
 const groupOffers = (items) => {
   let groupedItems = [];
   for (let i = 0; i < items.length - (items.length % 2); i = i + 2) {
@@ -110,6 +65,11 @@ export default function HomePage() {
     data: [],
   });
 
+  const [viewAll, setViewAll] = useState(false);
+  const [categories, setCategories] = useState([]);
+  const token = useSelector(selectToken);
+  console.log("home");
+
   useEffect(() => {
     if (isMobile)
       setGroupedItems({
@@ -123,6 +83,26 @@ export default function HomePage() {
       });
   }, []);
 
+  useEffect(() => {
+    async function fetchCategories() {
+      console.log("categories requested");
+      const response = await axios.get(
+        requestServerAddress + "profile/getSellersCategory",
+        {
+          headers: {
+            "x-auth-token": token,
+          },
+        }
+      );
+      setCategories([
+        ...response.data.map((val) => val[0].toUpperCase() + val.slice(1)),
+      ]);
+    }
+    if (!categories.length) {
+      fetchCategories();
+    }
+  }, [categories, token]);
+
   return (
     <>
       <NavBar />
@@ -132,15 +112,29 @@ export default function HomePage() {
           <h5 className="mt-2 discover-heading">Discover By categories</h5>
         </div>
         <div className="col-4 col-sm-8 col-md-6 view-btn">
-          <CustomButton classNames={"btn-success btn-register btn-sm"}>
+          <CustomButton
+            classNames={"btn-success btn-register btn-sm"}
+            onClick={() => setViewAll(true)}
+          >
             View All
           </CustomButton>
         </div>
       </div>
       <div className="category">
-        {categories.map(({ imgurl, category, key }) => (
-          <CategoryCard category={category} imgUrl={imgurl} key={key} />
+        {categories.slice(0, 5).map((category, index) => (
+          <CategoryCard category={category} imgUrl={FashionImg} key={index} />
         ))}
+        {viewAll
+          ? categories
+              .slice(5, categories.length)
+              .map((category, index) => (
+                <CategoryCard
+                  category={category}
+                  imgUrl={FashionImg}
+                  key={index + 5}
+                />
+              ))
+          : null}
       </div>
     </>
   );

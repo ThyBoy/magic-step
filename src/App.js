@@ -24,7 +24,6 @@ const NoMatch = () => <div>No Match Found</div>;
 function App() {
   const user = useSelector(selectCurrentUser);
   const unapproved = useSelector(selectUserStatus);
-  console.log(user, unapproved, user && unapproved);
   return (
     <>
       <NotificationComponent />

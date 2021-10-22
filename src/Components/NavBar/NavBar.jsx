@@ -64,14 +64,16 @@ export default function NavBar() {
     <div>
       <nav className="navbar navbar-inverse navbar-dark navbar-static-top nav-back-style">
         {isMobile ? null : <OffcanvasComponent isMobile={isMobile} />}
-        <div className="location-div">
-          <FontAwesomeIcon
-            icon={faMapMarkerAlt}
-            size="2x"
-            color={isMobile ? otherColor : "white"}
-          />
-          <p className="location-text">New Delhi,India</p>
-        </div>
+        <Link to="/location" style={{ textDecoration: "none" }}>
+          <div className="location-div">
+            <FontAwesomeIcon
+              icon={faMapMarkerAlt}
+              size="2x"
+              color={isMobile ? otherColor : "white"}
+            />
+            <p className="location-text">New Delhi,India</p>
+          </div>
+        </Link>
         {isMobile ? <IconComponent isMobile={isMobile} /> : null}
         <div className="search-div">
           {isMobile ? <OffcanvasComponent isMobile={isMobile} /> : null}
