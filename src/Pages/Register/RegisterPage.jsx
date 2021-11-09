@@ -9,13 +9,9 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { FormCheck } from "react-bootstrap";
-import {
-  changeNotification,
-  showModal,
-  showLoading,
-  hideLoading,
-} from "../../redux/modal/modal.actions";
+import { showLoading, hideLoading } from "../../redux/ui/ui.actions";
 import { setCurrentUser } from "../../redux/user/user.actions";
+import { showAlertThunk } from "../../redux/ui/ui.utils";
 
 export default function RegisterPage() {
   const [userInputs, setUserInputs] = useState({
@@ -47,11 +43,6 @@ export default function RegisterPage() {
     });
   }
 
-  function showNotification(str) {
-    dispatch(changeNotification(str));
-    dispatch(showModal());
-  }
-
   function ValidateEmail(mail) {
     if (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(mail)) {
       return true;
@@ -67,19 +58,19 @@ export default function RegisterPage() {
       !userInputs.phone ||
       !userInputs.retypePassword
     ) {
-      showNotification("Details can not be empty!!");
+      dispatch(showAlertThunk("Details can not be empty!!"));
       return;
     }
     if (!ValidateEmail(userInputs.email)) {
-      showNotification("Not a Valid Email!!");
+      dispatch(showAlertThunk("Not a Valid Email!!"));
       return;
     }
     if (userInputs.password.length < 6) {
-      showNotification("Password must be atleast 6 characters.");
+      dispatch(showAlertThunk("Password must be atleast 6 characters."));
       return;
     }
     if (userInputs.password !== userInputs.retypePassword) {
-      showNotification("Password does not match.");
+      dispatch(showAlertThunk("Password does not match."));
       return;
     }
     dispatch(showLoading());
@@ -103,11 +94,11 @@ export default function RegisterPage() {
       console.log(user);
     } catch (error) {
       if (error.response.data?.msg) {
-        showNotification(error.response.data.msg);
+        dispatch(showAlertThunk(error.response.data.msg));
       } else if (error.response.data?.error) {
-        showNotification(error.response.data.error);
+        dispatch(showAlertThunk(error.response.data.error));
       } else {
-        showNotification("An Error Occurred");
+        dispatch(showAlertThunk("An Error Occurred"));
       }
       console.log(error.response);
     }

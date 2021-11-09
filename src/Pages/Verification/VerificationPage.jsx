@@ -3,11 +3,11 @@ import "./VerificationPage.css";
 import { requestServerAddress } from "../../env";
 import { useDispatch } from "react-redux";
 import {
-  changeNotification,
+  changeAlertMessage,
   hideLoading,
   showLoading,
-  showModal,
-} from "../../redux/modal/modal.actions";
+  showAlert,
+} from "../../redux/ui/ui.actions";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { selectToken } from "../../redux/user/user.selectors";
@@ -30,17 +30,17 @@ export default function VerificationPage() {
     } catch (error) {
       console.log(error);
       if (error.response.data?.error) {
-        dispatch(changeNotification(error.response.data.error));
-        dispatch(showModal());
+        dispatch(changeAlertMessage(error.response.data.error));
+        dispatch(showAlert());
       } else {
-        dispatch(changeNotification("An Error Occurred"));
-        dispatch(showModal());
+        dispatch(changeAlertMessage("An Error Occurred"));
+        dispatch(showAlert());
       }
     }
     dispatch(hideLoading());
   }
 
-  async function handleSignOut() {
+  function handleSignOut() {
     dispatch(showLoading());
     dispatch(resetCurrentUser());
     dispatch(hideLoading());
@@ -58,16 +58,16 @@ export default function VerificationPage() {
         }
       );
       console.log(response, response.data);
-      dispatch(changeNotification("Mail Send"));
-      dispatch(showModal());
+      dispatch(changeAlertMessage("Mail Send"));
+      dispatch(showAlert());
     } catch (error) {
       console.log(error.response);
       if (error.response.data?.error) {
-        dispatch(changeNotification(error.response.data.error));
-        dispatch(showModal());
+        dispatch(changeAlertMessage(error.response.data.error));
+        dispatch(showAlert());
       } else {
-        dispatch(changeNotification("An Error Occurred"));
-        dispatch(showModal());
+        dispatch(changeAlertMessage("An Error Occurred"));
+        dispatch(showAlert());
       }
     }
     dispatch(hideLoading());

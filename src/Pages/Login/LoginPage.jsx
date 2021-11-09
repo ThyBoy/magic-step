@@ -9,13 +9,9 @@ import { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import {
-  showModal,
-  showLoading,
-  changeNotification,
-  hideLoading,
-} from "../../redux/modal/modal.actions";
+import { showLoading, hideLoading } from "../../redux/ui/ui.actions";
 import { setCurrentUser, setUnapproved } from "../../redux/user/user.actions";
+import { showAlertThunk } from "../../redux/ui/ui.utils";
 
 export default function LoginPage() {
   const [credentials, setCredentials] = useState({ email: "", password: "" });
@@ -30,22 +26,17 @@ export default function LoginPage() {
     });
   }
 
-  function showNotification(str) {
-    dispatch(changeNotification(str));
-    dispatch(showModal());
-  }
-
   function handleShowPassword(event) {
     setShowPassword(event.target.checked);
   }
 
   async function handleSubmit() {
     if (!credentials.email || !credentials.password) {
-      showNotification("Email or Password can not be empty!!");
+      dispatch(showAlertThunk("Email or Password can not be empty!!"));
       return;
     }
     if (credentials.password.length < 6) {
-      showNotification("Password must be atleast 6 characters.");
+      dispatch(showAlertThunk("Password must be atleast 6 characters."));
       return;
     }
     dispatch(showLoading());
@@ -66,14 +57,14 @@ export default function LoginPage() {
       dispatch(setUnapproved(user.data.user.status === "unapproved"));
       console.log(user);
     } catch (error) {
-      if (error.response.data?.msg) {
-        showNotification(error.response.data.msg);
-      } else if (error.response.data?.error) {
-        showNotification(error.response.data.error);
+      if (error?.response.data?.msg) {
+        dispatch(showAlertThunk(error.response.data.msg));
+      } else if (error?.response.data?.error) {
+        dispatch(showAlertThunk(error.response.data.error));
       } else {
-        showNotification("An Error Occurred");
+        dispatch(showAlertThunk("An Error Occurred"));
       }
-      console.log(error.response);
+      console.log(error);
     }
     dispatch(hideLoading());
   }

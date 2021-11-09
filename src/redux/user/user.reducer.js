@@ -3,6 +3,7 @@ import { userActionTypes } from "./user.types";
 const INITIAL_STATE = {
   currentUser: null,
   unapproved: true,
+  location: null,
 };
 
 const userReducer = (state = INITIAL_STATE, action) => {
@@ -18,12 +19,19 @@ const userReducer = (state = INITIAL_STATE, action) => {
         ...state,
         currentUser: null,
         unapproved: true,
+        location: null,
       };
 
     case userActionTypes.SET_USER_STATUS:
       return {
         ...state,
         unapproved: action.payload,
+      };
+
+    case userActionTypes.SET_USER_LOCATION:
+      return {
+        ...state,
+        location: action.payload,
       };
 
     default:

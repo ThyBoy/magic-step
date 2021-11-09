@@ -1,136 +1,101 @@
-import ShopLogo from "../../img/ShopLogo.jpg";
-import Coverpic from "../../img/coverpic.jpg";
-import FashionIcon from "../../img/fashionIcon.svg";
-import SportsIcon from "../../img/sportsIcon.svg";
-import GroceryIcon from "../../img/groceryIcon.png";
 import ShopComponent from "../../Components/ShopComponent/ShopComponent";
 import { CategoryPill } from "../../Components/CategoryComponents/Category";
-
+import { requestServerAddress } from "../../env";
 import "./ShopList.css";
 import NavBar from "../../Components/NavBar/NavBar";
+import { useParams } from "react-router";
+import { useState, useEffect, useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { selectCategories } from "../../redux/ui/ui.selector";
+import { fetchCategoriesThunk, showAlertThunk } from "../../redux/ui/ui.utils";
+import { showLoading, hideLoading } from "../../redux/ui/ui.actions";
+import axios from "axios";
 
-const shops = [
-  {
-    name: "LifeStyle Fashion",
-    location: "CP, New Delhi",
-    rating: 4.1,
-    ratingsCount: 17,
-    logoImgUrl: ShopLogo,
-    coverImgUrl: Coverpic,
-    products: 56,
-    visits: 500,
-    sale: 50,
-    key: 1,
-  },
-  {
-    name: "LifeStyle Fashion",
-    location: "CP, New Delhi",
-    rating: 4.2,
-    ratingsCount: 27,
-    logoImgUrl: ShopLogo,
-    coverImgUrl: Coverpic,
-    products: 156,
-    visits: 660,
-    sale: 89,
-    key: 2,
-  },
-  {
-    name: "LifeStyle Fashion",
-    location: "CP, New Delhi",
-    rating: 4.3,
-    ratingsCount: 37,
-    logoImgUrl: ShopLogo,
-    coverImgUrl: Coverpic,
-    products: 256,
-    visits: 620,
-    sale: 150,
-    key: 3,
-  },
-  {
-    name: "LifeStyle Fashion",
-    location: "CP, New Delhi",
-    rating: 4.4,
-    ratingsCount: 47,
-    logoImgUrl: ShopLogo,
-    coverImgUrl: Coverpic,
-    products: 356,
-    visits: 780,
-    sale: 99,
-    key: 4,
-  },
-  {
-    name: "LifeStyle Fashion",
-    location: "CP, New Delhi",
-    rating: 4.5,
-    ratingsCount: 107,
-    logoImgUrl: ShopLogo,
-    coverImgUrl: Coverpic,
-    products: 506,
-    visits: 590,
-    sale: 350,
-    key: 5,
-  },
-  {
-    name: "LifeStyle Fashion",
-    location: "CP, New Delhi",
-    rating: 4.6,
-    ratingsCount: 127,
-    logoImgUrl: ShopLogo,
-    coverImgUrl: Coverpic,
-    products: 516,
-    visits: 760,
-    sale: 90,
-    key: 6,
-  },
-  {
-    name: "LifeStyle Fashion",
-    location: "CP, New Delhi",
-    rating: 4.7,
-    ratingsCount: 197,
-    logoImgUrl: ShopLogo,
-    coverImgUrl: Coverpic,
-    products: 36,
-    visits: 990,
-    sale: 770,
-    key: 7,
-  },
-  {
-    name: "LifeStyle Fashion",
-    location: "CP, New Delhi",
-    rating: 4.8,
-    ratingsCount: 17,
-    logoImgUrl: ShopLogo,
-    coverImgUrl: Coverpic,
-    products: 156,
-    visits: 510,
-    sale: 10,
-    key: 8,
-  },
-];
-
-const category = [
-  { name: "Fashion", imageUrl: FashionIcon, key: 1 },
-  { name: "Sports", imageUrl: SportsIcon, key: 2 },
-  { name: "Grocery", imageUrl: GroceryIcon, key: 3 },
-];
+// const shops = [
+//   {
+//     name: "LifeStyle Fashion",
+//     location: "CP, New Delhi",
+//     rating: 4.1,
+//     ratingsCount: 17,
+//     logoImgUrl: ShopLogo,
+//     coverImgUrl: Coverpic,
+//     products: 56,
+//     visits: 500,
+//     sale: 50,
+//     key: 1,
+//   },
+// ];
 
 export default function ShopList() {
+  const params = useParams();
+  const [shops, setShops] = useState([]);
+  const [requested, setRequested] = useState(false);
+  const dispatch = useDispatch();
+  const categories = useSelector(selectCategories);
+
+  const fetchShopsData = useCallback(async () => {
+    dispatch(showLoading());
+    if (params?.category) {
+      dispatch(showLoading());
+      try {
+        console.log("Called ", params.category);
+        const response = await axios.post(
+          requestServerAddress + "profile/filterBySellerCategory",
+          {
+            category: params.category,
+          }
+        );
+        setShops(response.data);
+      } catch (error) {
+        if (error?.response.data?.msg) {
+          dispatch(showAlertThunk(error.response.data.msg));
+        } else if (error?.response.data?.error) {
+          dispatch(showAlertThunk(error.response.data.error));
+        } else {
+          dispatch(showAlertThunk("Can't get categories!!"));
+        }
+        console.log(error);
+      }
+    }
+    dispatch(hideLoading());
+  }, [params, dispatch]);
+
+  useEffect(() => {
+    if (!params?.category && !requested) {
+      setRequested(true);
+      dispatch(fetchCategoriesThunk());
+    }
+  }, [dispatch, requested, params]);
+
+  useEffect(() => {
+    if (params?.category) {
+      fetchShopsData();
+    }
+  }, [params, fetchShopsData]);
+
   return (
     <>
       <NavBar />
-      <div className="category-list">
-        {category.map((item) => (
-          <CategoryPill
-            key={item.key}
-            category={item.name}
-            imgUrl={item.imageUrl}
-          />
-        ))}
-      </div>
+      {!params?.category ? (
+        <div className="category-list">
+          {categories
+            .slice(0, 8)
+            .map(({ category_name, category_image }, index) => (
+              <CategoryPill
+                category={category_name}
+                imgUrl={requestServerAddress + category_image}
+                categoryUrl={"/shops/" + category_name}
+                key={index}
+              />
+            ))}
+        </div>
+      ) : null}
       <div className="shop-list">
-        {shops.map((item) => (
-          <ShopComponent key={item.key} data={item} />
-        ))}
+        {shops.length ? (
+          shops.map((item, index) => <ShopComponent key={index} data={item} />)
+        ) : (
+          <h2 style={{ fontWeight: "600" }}>No Shops Found!</h2>
+        )}
       </div>
     </>
   );

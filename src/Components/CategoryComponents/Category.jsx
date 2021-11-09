@@ -1,17 +1,33 @@
+import { useHistory } from "react-router-dom";
 import "./Category.css";
 
-export function CategoryCard({ category, imgUrl, imgAlt }) {
+export function CategoryCard({ category, imgUrl, categoryUrl }) {
+  const history = useHistory();
   return (
-    <div className="cardbody category-card">
-      <img className="img-fluid p-2 category-img" src={imgUrl} alt={imgAlt} />
+    <div
+      className="cardbody category-card"
+      onClick={() => {
+        history.push(categoryUrl);
+      }}
+    >
+      <div
+        className="img-fluid p-2 category-img"
+        style={{ backgroundImage: `url(${imgUrl})` }}
+      />
       <p className="category-name">{category}</p>
     </div>
   );
 }
 
-export function CategoryPill({ category, imgUrl }) {
+export function CategoryPill({ category, imgUrl, categoryUrl }) {
+  const history = useHistory();
   return (
-    <div className="cardbody category-pill">
+    <div
+      className="cardbody category-pill"
+      onClick={() => {
+        history.push(categoryUrl);
+      }}
+    >
       <img className="category-icon" src={imgUrl} alt={category} />
       <p
         className="category-name"

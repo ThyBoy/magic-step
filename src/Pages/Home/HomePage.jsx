@@ -1,17 +1,16 @@
 import "./HomePage.css";
 import FirstOfferImg from "../../img/offer-image1.jpg";
 import SecondOfferImg from "../../img/offer-image2.png";
-import FashionImg from "../../img/fashion.jpg";
 import CarouselComponent from "../../Components/CarouselComponent/CarouselComponent";
 import CustomButton from "../../Components/CustomButton/CustomButton";
 import { useEffect, useState } from "react";
 import { CategoryCard } from "../../Components/CategoryComponents/Category";
 import { isMobile } from "react-device-detect";
 import NavBar from "../../Components/NavBar/NavBar";
-import axios from "axios";
 import { requestServerAddress } from "../../env";
-import { useSelector } from "react-redux";
-import { selectToken } from "../../redux/user/user.selectors";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCategoriesThunk } from "../../redux/ui/ui.utils";
+import { selectCategories } from "../../redux/ui/ui.selector";
 
 const items = [
   {
@@ -66,11 +65,12 @@ export default function HomePage() {
   });
 
   const [viewAll, setViewAll] = useState(false);
-  const [categories, setCategories] = useState([]);
-  const token = useSelector(selectToken);
-  console.log("home");
+  const [requested, setRequested] = useState(false);
+  const dispatch = useDispatch();
+  const categories = useSelector(selectCategories);
 
   useEffect(() => {
+    console.log('Called groupitems')
     if (isMobile)
       setGroupedItems({
         isMobile: true,
@@ -84,24 +84,11 @@ export default function HomePage() {
   }, []);
 
   useEffect(() => {
-    async function fetchCategories() {
-      console.log("categories requested");
-      const response = await axios.get(
-        requestServerAddress + "profile/getSellersCategory",
-        {
-          headers: {
-            "x-auth-token": token,
-          },
-        }
-      );
-      setCategories([
-        ...response.data.map((val) => val[0].toUpperCase() + val.slice(1)),
-      ]);
+    if (!requested) {
+      setRequested(true);
+      dispatch(fetchCategoriesThunk());
     }
-    if (!categories.length) {
-      fetchCategories();
-    }
-  }, [categories, token]);
+  }, [dispatch, requested]);
 
   return (
     <>
@@ -121,16 +108,24 @@ export default function HomePage() {
         </div>
       </div>
       <div className="category">
-        {categories.slice(0, 5).map((category, index) => (
-          <CategoryCard category={category} imgUrl={FashionImg} key={index} />
-        ))}
+        {categories
+          .slice(0, 5)
+          .map(({ category_name, category_image }, index) => (
+            <CategoryCard
+              category={category_name}
+              imgUrl={requestServerAddress + category_image}
+              categoryUrl={"/shops/" + category_name}
+              key={index}
+            />
+          ))}
         {viewAll
           ? categories
               .slice(5, categories.length)
-              .map((category, index) => (
+              .map(({ category_name, category_image }, index) => (
                 <CategoryCard
-                  category={category}
-                  imgUrl={FashionImg}
+                  category={category_name}
+                  imgUrl={requestServerAddress + category_image}
+                  categoryUrl={"/shops/" + category_name}
                   key={index + 5}
                 />
               ))

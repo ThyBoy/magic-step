@@ -16,3 +16,8 @@ export const selectToken = createSelector(
   [selectCurrentUser],
   (user) => user.token
 );
+
+export const selectLocation = createSelector(
+  [selectUser],
+  (user) => user.location
+);

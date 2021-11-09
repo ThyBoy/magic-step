@@ -1,5 +1,5 @@
 import "./LoadingComponent.css";
-import { selectLoading } from "../../redux/modal/modal.selector";
+import { selectLoading } from "../../redux/ui/ui.selector";
 import { useSelector } from "react-redux";
 import Spinner from "react-bootstrap/Spinner";
 
